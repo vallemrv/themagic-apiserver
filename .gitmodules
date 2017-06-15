@@ -1,0 +1,3 @@
+[submodule "python-ormsqlite"]
+	path = python-ormsqlite
+	url = https://github.com/vallemrv/python-ormsqlite.git
