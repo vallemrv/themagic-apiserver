@@ -11,29 +11,17 @@ paramsRows = {
         "rows":[{
                "user":{
                     "nombre": "Rafael",
-                    "apellido": "ñññ¢¢¢",
-                    "telf": "6666",
-                    "precio": 1233.0,
-                    "casa": True,
-                    "perro": "pdae"
-                   }
+                    "apellido": "Perez",
+                     }
                },{
                 "user":{
                     "nombre": "Aitor",
                     "apellido": "Rodriguez",
-                    "telf": "6666",
-                    "precio": 1123.0,
-                    "casa": True,
-                    "perro": "pdae"
                     }
                 },{
                 "user":{
                     "nombre": "Raul",
-                    "apellido": "Rodriguez",
-                    "telf": "6666",
-                    "precio": 103.0,
-                    "casa": True,
-                    "perro": "pdae"
+                    "apellido": "Blanco",
                     }
                 }]
         }
@@ -45,7 +33,6 @@ paramsRow = {
         'user':{
             "nombre": "Pepito",
             "apellido": "Lopez",
-            "telf": "6666",
             }
         }
 }
@@ -54,12 +41,8 @@ paramsNewChild = {
     'add':{
         "db":"valleorm",
         "user":{
-            "nombre": "Loco pitres",
-            "apellido": "Rodriguez",
-            "telf": "6666",
-            "precio": 1233.0,
-            "casa": True,
-            "perro": "pdae",
+            "nombre": "Loco",
+            "apellido": "Dolores",
             "direcciones":[{
                 "tipo":"calle",
                 "nombre": "MARACENA",
@@ -89,16 +72,12 @@ paramsManyToMany = {
     'add': {
         'db': 'valleorm',
         'user':{
-            "nombre": "Loco pitres",
-            "apellido": "Rodriguez",
-            "telf": "6666",
-            "precio": 1233.0,
-            "casa": True,
-            "perro": "pdae",
+            "nombre": "Diego",
+            "apellido": "Martinez",
             "amigos":[
                { "user":{
-                   "nombre": "amigito feliz",
-                   "apellido": "Rodriguez",
+                   "nombre": "Amigito",
+                   "apellido": "Feliz",
                }}
             ]
         }
@@ -127,7 +106,6 @@ paramsManyToManyID = {
 
 paramsMultiple = {
     'add':{
-        'db': 'valleorm',
         'rows':[
            {
             'user': {
@@ -159,5 +137,15 @@ paramsMultiple = {
 }
 
 import json
-r = requests.post("http://localhost:8000", {"data":json.dumps(paramsMultiple)})
+r = requests.post("http://localhost:8000", {"data":json.dumps(paramsRow)})
+print r.json()
+r = requests.post("http://localhost:8000", {"data":json.dumps(paramsRows)})
+print r.json()
+r = requests.post("http://localhost:8000", {"data":json.dumps(paramsChild)})
+print r.json()
+r = requests.post("http://localhost:8000", {"data":json.dumps(paramsNewChild)})
+print r.json()
+r = requests.post("http://localhost:8000", {"data":json.dumps(paramsManyToMany)})
+print r.json()
+r = requests.post("http://localhost:8000", {"data":json.dumps(paramsManyToManyID)})
 print r.json()
