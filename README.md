@@ -15,7 +15,7 @@ Run server
 
 For more installation option see django deploy.
 
-:arrow_forward:Payload
+:arrow_forward: Payload
 ----------------------
 Create table and add new record
 ```javascript
@@ -180,7 +180,7 @@ sameForChild = {
           'ID': 1,   //by ID
           "nombre":  "Lolo",  //for some query column
           "Joins": ["tablejoin", "relationjoin"],
-          "columns": [lis of columns],
+          "columns": [`lis of columns],
 
         }
       }
