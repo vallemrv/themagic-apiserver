@@ -11,16 +11,30 @@ paramsGetAll = {
         'user': {
             'columns': ['ID', 'Nombre'],
             'amigos':{
-                'columns':["nombre"]
+                'ID': 1
             }
         }
     }
 }
 
+removeOneID ={
+    'rm':{
+     'db': 'valleorm',
+     'user':{
+        'ID': 1,
+        'amigos':{
 
+        }
+        }
+    },
+    'get':{
+        'db': 'valleorm',
+         'user':{
+
+         }
+    }
+}
 
 import json
 r = requests.post("http://localhost:8000", {"data":json.dumps(paramsGetAll)})
-for rows in r.json().get("get"):
-    for row in rows:
-        print rows[row]
+print r.json()

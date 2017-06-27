@@ -10,12 +10,14 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
 from valleorm.models import Models
+from filecontroller import FileController
 
 class AddController():
-    def __init__(self, JSONResponse, JSONRequire, path):
+    def __init__(self, JSONResponse, JSONRequire, path, fichero=None):
         self.JSONResponse = JSONResponse
         self.JSONRequire = JSONRequire
         self.path = path
+        self.fichero = fichero
 
         self.db = JSONRequire.get("db") if 'db' in JSONRequire.get("db") else JSONRequire.get("db")+".db"
         for k, v in JSONRequire.items():
@@ -34,11 +36,20 @@ class AddController():
         row, relations = self.modifyRow(row_req, tb)
         row.save()
         row_send = row.toDICT()
+        if len(relations) <= 0 and self.fichero:
+            filecontroller = FileController(path=self.path, db=self.db)
+            rowfile = filecontroller.addFile(row, self.fichero)
+            row_send[row.tableName] = rowfile
         for relation in relations:
             nameKey = relation["fieldName"] if 'fieldName' in relation else relation["relationName"]
+            _rows = []
             if not nameKey in row_send:
                 row_send[nameKey] = []
-            for r in row_req[nameKey]:
+            if type(row_req[nameKey]) is dict:
+                _rows = [row_req[nameKey]]
+            else:
+                _rows = row_req[nameKey]
+            for r in _rows:
                 if relation["relationTipo"] == "MANY":
                     child, relchild = self.modifyRow(r, nameKey, relationship={
                         'relationName': tb,
@@ -50,7 +61,14 @@ class AddController():
                     child.save()
 
                 getattr(row, nameKey).add(child)
-                row_send[nameKey].append(child.toDICT())
+                child_send = child.toDICT()
+                if self.fichero:
+                    filecontroller = FileController(path=self.path, db=self.db)
+                    rowfile = filecontroller.addFile(child, self.fichero)
+                    child_send = rowfile
+
+                row_send[nameKey].append(child_send)
+
 
         if multiple:
             self.JSONResponse["add"].append(row_send)
@@ -71,16 +89,16 @@ class AddController():
                 model = self.create_model(row_json)
                 if relationship:
                     model["relationship"].append(relationship)
-
             row = Models(path=self.path, dbName=self.db, tableName=tb, model=model)
         relations = []
         for key, v in row_json.items():
-            if type(row_json[key]) is list:
+            if type(row_json[key]) is list  or type(v) is dict:
                 fieldName = key
                 relationName = key
-                child = row_json[key]
+                childs = row_json[key]
                 tipo = "MANY"
-                for kr, vr in  child[0].items():
+                child = childs[0] if type(v) is list else childs
+                for kr, vr in  child.items():
                     if type(vr) is dict:
                         tipo = "MANYTOMANY"
                         relationName = kr
@@ -103,7 +121,7 @@ class AddController():
 
     def repare_model(self, model, row, tb):
         for key, v in row.items():
-            if not type(v) is list:
+            if not type(v) is list  and not type(v) is dict:
                 search = filter(lambda field: field['fieldName'] == key, model["fields"])
                 if len(search) <= 0:
                     default, tipo = self.getTipo(v)
@@ -121,7 +139,7 @@ class AddController():
         model = {"fields":[], "relationship": []}
 
         for key, v in row.items():
-            if not type(v) is list:
+            if not type(v) is list and not type(v) is dict:
                 default, tipo = self.getTipo(v)
                 model["fields"].append({
                  'fieldName': key,

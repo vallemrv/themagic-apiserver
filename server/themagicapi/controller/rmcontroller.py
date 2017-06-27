@@ -12,22 +12,18 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from valleorm.models import Models
 from filecontroller import FileController
 
-class GetController():
+
+class RmController():
     def __init__(self, JSONResponse, JSONRequire, path):
         self.JSONResponse = JSONResponse
         self.JSONRequire = JSONRequire
         self.path = path
-        JSONResponse['get'] = []
+        JSONResponse['rm'] = []
 
         self.db = JSONRequire.get("db") if 'db' in JSONRequire.get("db") else JSONRequire.get("db")+".db"
         for k, v in JSONRequire.items():
             if k == "db":
                 pass
-            elif k == "rows":
-                rows = JSONRequire.get("rows")
-                for row in rows:
-                    for kr, vr in row.items():
-                        self.actionGet(vr, kr)
             else:
                 self.actionGet(v, k)
 
@@ -37,58 +33,60 @@ class GetController():
         row = Models(path=self.path, dbName=self.db, tableName=tb)
         if "ID" in condition:
             row.loadByPk(condition["ID"])
-            row_send = row.toDICT()
-            if FileController.hasFile(row):
-                fileController = FileController(path=self.path, db=self.db)
-                row_send = fileController.getFile(row)
-
-            response = {tb:row_send}
+            response = {tb:"remove:" +'1' if row.ID > 0 else '0' , 'ID': row.ID}
+            rmRoot = True
             for col, val in condition.items():
                 if type(condition[col]) is dict:
+                    rmRoot = False
                     modelCondition, subQuery = self.getModelQuery(val)
                     rows = getattr(row, col).get(modelCondition)
-                    response[col] = []
+                    response = {col:"remove "+str(len(rows)), 'IDs': []}
+
                     for child in rows:
-                        child_send = child.toDICT()
+                        response["IDs"].append(child.ID)
                         if FileController.hasFile(child):
                             fileController = FileController(path=self.path, db=self.db)
-                            child_send = fileController.getFile(child)
+                            row_send = fileController.rmFile(child)
 
-                        response[col].append(child_send)
+                        getattr(row, col).remove(child)
 
-            self.JSONResponse["get"].append(response)
+            if rmRoot:
+                if FileController.hasFile(row):
+                    fileController = FileController(path=self.path, db=self.db)
+                    row_send = fileController.rmFile(row)
+
+                row.remove()
+
+            self.JSONResponse["rm"].append(response)
 
         else:
             mainCondition, subQuery = self.getModelQuery(condition)
+            numRemoveRow = 0
             for rowMain in row.getAll(condition=mainCondition):
                 if len(subQuery) > 0:
                     for nodeCondition, fieldName in subQuery:
                         subNodeCondition, nothing = self.getModelQuery(nodeCondition)
                         rows = getattr(rowMain, fieldName).get(subNodeCondition)
                         if len(rows) > 0:
-                            rowMain_send = rowMain.toDICT()
-                            if FileController.hasFile(rowMain):
-                                fileController = FileController(path=self.path, db=self.db)
-                                rowMain_send = fileController.getFile(rowMain)
-
-                            response = {tb:rowMain_send}
-                            response[tb][fieldName] = []
+                            response = {}
+                            response[fieldName] = [{col:"remove "+str(len(rows)), 'IDs': []}]
                             for row in rows:
-                                row_send = row.toDICT()
                                 if FileController.hasFile(row):
                                     fileController = FileController(path=self.path, db=self.db)
-                                    row_send = fileController.getFile(row)
+                                    row_send = fileController.rmFile(row)
 
-                                response[tb][fieldName].append(row_send)
+                                getattr(rowMain, fieldName).remove(row)
+                                response[fieldName]['IDs'].append(row.ID)
 
-                            self.JSONResponse["get"].append(response)
+                            self.JSONResponse["rm"].append(response)
                 else:
-                    rowMain_send = rowMain.toDICT()
+                    numRemoveRow += 1
+                    self.JSONResponse["rm"].append({tb:"remove: "+str(numRemoveRow), 'ID': rowMain.ID})
                     if FileController.hasFile(rowMain):
                         fileController = FileController(path=self.path, db=self.db)
-                        rowMain_send = fileController.getFile(rowMain)
+                        row_send = fileController.rmFile(rowMain)
 
-                    self.JSONResponse["get"].append(rowMain_send)
+                    rowMain.remove()
 
     def getModelQuery(self, condition):
         modelCondition = {}

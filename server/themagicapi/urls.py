@@ -18,5 +18,5 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.index, name="index"),
-    url(r"^sendFiles/$", views.sendFiles, name="sendFiles")
+    url(r"^getfiles/$", views.getfiles, name="getfiles")
 ]
