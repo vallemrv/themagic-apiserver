@@ -28,6 +28,7 @@ For more installation option see django deploy.
 ----------------------
 Create table and add new record
 ```javascript
+// Make the models and insert new record
 insertVariousRow = {
     'add':{
         "db":"valleorm",
@@ -50,16 +51,19 @@ insertVariousRow = {
         }
 }
 
+//insert the new record and alter table for new columns
 insertAndCreateTable = {
     'add':{
         "db":"valleorm.db",
         'user':{
             "nombre": "Pepito",
             "apellido": "Lopez",
+            'telf': '777777',
+            'email': 'lolo@ejemplo.com'
             }
         }
 }
-
+// Insert new row and create a new table child with new content
 insertParentAndAddChild = {
     'add':{
         "db":"valleorm",
@@ -75,7 +79,7 @@ insertParentAndAddChild = {
             }
         }
 }
-
+//Add a new child the user know ID
 addChildKnowIDParent = {
     'add':{
         "db":"valleorm.db",
@@ -91,6 +95,7 @@ addChildKnowIDParent = {
         }
 }
 
+//Insert, create new user and create new relationship 
 createManyToManyRelation = {
     'add': {
         'db': 'valleorm',
@@ -206,7 +211,7 @@ import json
 data = json.dumps(***somedata***)
 #for get token see https://github.com/jpulgarin/django-tokenapi.git
 token = {
-    'user': 1, #user number 
+    'user': 1, #user number
     'token': 'some token',
     'data': data
 }
