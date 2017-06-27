@@ -2,15 +2,17 @@
 Server api generic. Deploy and now. Just worry about the client's logic.
 
 ### Quickstart
-:package: Installation
------------------------
-Dependencies
- Django
- valleorm
- django-tokenapi
+Requirements
+------------
+* Django 1.5+
+* valleorm
+* django-tokenapi
 
 for install packages
-`$ pip install <packagename>``
+`$ pip install <packagename>`
+
+:package: Installation
+-----------------------
 
 Clone repository
 `$ git clone https://github.com/vallemrv/themagic-apiserver.git`
