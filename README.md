@@ -1,7 +1,7 @@
 # themagic-apiserver
 Server api generic. Deploy and now. Just worry about the client's logic.
 
-### Quickstart
+## Quickstart
 Requirements
 ------------
 * Django 1.5+
@@ -198,12 +198,20 @@ sameForChild = {
 
 ```
 
-Requests
---------
+Requests example
+----------------
 ```python
 import requests
 import json
-r = requests.post("http://localhost:8000", {"data":json.dumps(**anyexample**)})
+data = json.dumps(***somedata***)
+#for get token see https://github.com/jpulgarin/django-tokenapi.git
+token = {
+    'user': 1, #user number 
+    'token': 'some token',
+    'data': data
+}
+
+r = requests.post("http://localhost:8000/", data=token)
 print r.json()
 
 ```
