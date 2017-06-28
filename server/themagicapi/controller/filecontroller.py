@@ -63,5 +63,18 @@ class FileController():
         return row_send
 
     @staticmethod
+    def getPath(self, id_search):
+        id_search = id_search if id_search != 'None'  else -1
+        uploader = FilesUpload.objects.filter(pk=id_search)
+        response = None
+        if uploader.count() > 0:
+            uploader = uploader.first()
+            response = uploader.docfile.name
+
+        return response
+
+
+
+    @staticmethod
     def hasFile(row):
         return hasattr(row, 'id_file_uploader')

@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
 from django.conf import settings
 from tokenapi.decorators import token_required
-from tokenapi.http import JsonResponse, JsonError
+from tokenapi.http import JsonResponse, JsonError,
+from django.http import HttpResponse
 from controller.addcontroller import AddController
 from controller.getcontroller import GetController
 from controller.rmcontroller import RmController
@@ -46,4 +47,15 @@ def index(request):
 
 @token_required
 def getfiles(request):
-    pass
+    if request.method != 'POST' or not 'ID' in request.POST:
+        return JsonError({"Error": "Este servidor solo acepta peticiones POST"})
+
+    id_file = request.POST["ID"]
+    path = FileController.getPath(id_file)
+    file_path = os.path.join(settings.MEDIA_ROOT, path)
+    if os.path.exists(file_path):
+        with open(file_path, 'rb') as fh:
+            response = HttpResponse(fh.read(), content_type="application/octet-stream")
+            response['Content-Disposition'] = 'inline; filename=' + os.path.basename(file_path)
+            return response
+    raise Http404

@@ -1,5 +1,8 @@
 # themagic-apiserver
 Server api generic. Deploy and now. Just worry about the client's logic.
+Create databases according to queries in JSON format. Add columns on demand.
+Create automatic relationships. etc. If you send files, 
+the necessary fields are created to save the information of the file.
 
 ## Quickstart
 Requirements
@@ -95,7 +98,7 @@ addChildKnowIDParent = {
         }
 }
 
-//Insert, create new user and create new relationship 
+//Insert, create new user and create new relationship
 createManyToManyRelation = {
     'add': {
         'db': 'valleorm',
