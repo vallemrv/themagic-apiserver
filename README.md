@@ -1,7 +1,7 @@
 # themagic-apiserver
 Server api generic. Deploy and now. Just worry about the client's logic.
 Create databases according to queries in JSON format. Add columns on demand.
-Create automatic relationships. etc. If you send files, 
+Create automatic relationships. etc. If you send files,
 the necessary fields are created to save the information of the file.
 
 ## Quickstart
@@ -223,3 +223,13 @@ r = requests.post("http://localhost:8000/", data=token)
 print r.json()
 
 ```
+
+:scroll: License
+----------------
+
+Licensed under the Apache-2.0, see `LICENSE`
+
+:heart_eyes: Contributors
+--------------------------
+
+Manuel Rodriguez <valle.mrv@gmail.com>
