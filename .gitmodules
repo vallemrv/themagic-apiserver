@@ -1,0 +1,6 @@
+[submodule "python-ormsqlite"]
+	path = python-ormsqlite
+	url = https://github.com/vallemrv/python-ormsqlite.git
+[submodule "django-tokenapi"]
+	path = django-tokenapi
+	url = https://github.com/jpulgarin/django-tokenapi.git
