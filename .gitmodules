@@ -2,3 +2,9 @@
 [submodule "python-ormsqlite"]
 	path = python-ormsqlite
 	url = https://github.com/vallemrv/python-ormsqlite.git
+[submodule "django-themagicapi"]
+	path = django-themagicapi
+	url = https://github.com/vallemrv/django-themagicapi.git
+[submodule "django-tokenapi"]
+	path = django-tokenapi
+	url = https://github.com/vallemrv/django-tokenapi.git
