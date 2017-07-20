@@ -4,6 +4,8 @@ Create databases according to queries in JSON format. Add columns on demand.
 Create automatic relationships. etc. If you send files,
 the necessary fields are created to save the information of the file.
 
+This is a server of tester. For deploy a new server see django deploy server for more information.
+
 ## Quickstart
 Requirements
 ------------

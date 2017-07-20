@@ -1,7 +1,16 @@
+# @Author: Manuel Rodriguez <valle>
+# @Date:   15-Jun-2017
+# @Email:  valle.mrv@gmail.com
+# @Filename: views.py
+# @Last modified by:   valle
+# @Last modified time: 19-Jul-2017
+# @License: Apache license vesion 2.0
+
+
 # -*- coding: utf-8 -*-
 from django.conf import settings
 from tokenapi.decorators import token_required
-from tokenapi.http import JsonResponse, JsonError,
+from tokenapi.http import JsonResponse, JsonError
 from django.http import HttpResponse
 from controller.addcontroller import AddController
 from controller.getcontroller import GetController

@@ -1,3 +1,12 @@
+# @Author: Manuel Rodriguez <valle>
+# @Date:   27-Jun-2017
+# @Email:  valle.mrv@gmail.com
+# @Filename: token_test.py
+# @Last modified by:   valle
+# @Last modified time: 19-Jul-2017
+# @License: Apache license vesion 2.0
+
+
 # -*- coding: utf-8 -*-
 import requests
 import sys
@@ -31,5 +40,5 @@ token = {
 }
 
 
-r = requests.post("http://localhost:8000/", data=token)
+r = requests.post("http://localhost:8000/", data=getTocken )
 print r.content
