@@ -9,6 +9,9 @@ __pycache__/
 # C extensions
 *.so
 
+server/tokenapi/
+server/themagicapi/valleorm/
+
 # Distribution / packaging
 .Python
 env/

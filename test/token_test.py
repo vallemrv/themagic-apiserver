@@ -1,13 +1,14 @@
+# -*- coding: utf-8 -*-
 # @Author: Manuel Rodriguez <valle>
 # @Date:   27-Jun-2017
 # @Email:  valle.mrv@gmail.com
 # @Filename: token_test.py
 # @Last modified by:   valle
-# @Last modified time: 19-Jul-2017
+# @Last modified time: 05-Sep-2017
 # @License: Apache license vesion 2.0
 
 
-# -*- coding: utf-8 -*-
+
 import requests
 import sys
 import os
@@ -19,7 +20,6 @@ sys.setdefaultencoding('UTF8')
 
 base = os.path.dirname(os.path.abspath(__file__))
 
-files = {'docfile': open(base+'/get_test.py', 'rb')}
 recordAdd = {
      'get':{
             'db': 'valleorm',
@@ -29,16 +29,18 @@ recordAdd = {
 }
 
 getTocken = {
-  'username':'pepito',
-  'password':'pepitolopez'
+  'username':'test',
+  'password':'calamatraca'
 }
+
 data = json.dumps(recordAdd)
+
 token = {
     'user': 1,
-    'token': '4na-f85142bc46b22993427d',
+    'token': '4p7-591e4481a7e9dc398910',
     'data': data
 }
 
 
-r = requests.post("http://localhost:8000/", data=getTocken )
+r = requests.post("http://localhost:8000/token/new.json", data=getTocken )
 print r.content

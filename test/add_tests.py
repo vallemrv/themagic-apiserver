@@ -1,29 +1,35 @@
 # -*- coding: utf-8 -*-
+# @Author: Manuel Rodriguez <valle>
+# @Date:   05-Sep-2017
+# @Email:  valle.mrv@gmail.com
+# @Last modified by:   valle
+# @Last modified time: 06-Sep-2017
+# @License: Apache license vesion 2.0
+
 import requests
 import sys
 # sys.setdefaultencoding() does not exist, here!
 reload(sys)  # Reload does the trick!
 sys.setdefaultencoding('UTF8')
+import json
 
 paramsRows = {
     'add':{
         "db":"valleorm",
-        "rows":[{
-               "user":{
+        "user":[
+               {
                     "nombre": "Rafael",
                     "apellido": "Perez",
                      }
-               },{
-                "user":{
+               ,{
                     "nombre": "Aitor",
                     "apellido": "Rodriguez",
                     }
-                },{
-                "user":{
+                ,{
                     "nombre": "Raul",
                     "apellido": "Blanco",
                     }
-                }]
+                ]
         }
 }
 
@@ -106,46 +112,43 @@ paramsManyToManyID = {
 
 paramsMultiple = {
     'add':{
-        'rows':[
+        'db': 'valleorm',
+        'user':[
            {
-            'user': {
+
                 'nombre': 'Manolo',
                 'apellido': 'Rodriguez'
-             }
+
            },
            {
-            'user':{
+
                 'nombre': 'Alvaro',
                 'apellido': 'Rodriguez'
-             }
+
            },
            {
-              'user':{
-                'ID': 1,
-                'hermanos':[
-                        {
-                      'user':{
-                            'ID': 2
-                            }
+            'ID': 1,
+            'hermanos':[
+                    {
+                  'user':{
+                        'ID': 2
                         }
+                    }
                     ]
-              }
-
            }
         ]
     }
 }
 
-import json
-r = requests.post("http://localhost:8000", {"data":json.dumps(paramsRow)})
-print r.json()
-r = requests.post("http://localhost:8000", {"data":json.dumps(paramsRows)})
-print r.json()
-r = requests.post("http://localhost:8000", {"data":json.dumps(paramsChild)})
-print r.json()
-r = requests.post("http://localhost:8000", {"data":json.dumps(paramsNewChild)})
-print r.json()
-r = requests.post("http://localhost:8000", {"data":json.dumps(paramsManyToMany)})
-print r.json()
-r = requests.post("http://localhost:8000", {"data":json.dumps(paramsManyToManyID)})
+data = json.dumps(paramsManyToManyID)
+
+token = {
+    'user': 1,
+    'token': '4p7-591e4481a7e9dc398910',
+    'data': data
+}
+
+
+
+r = requests.post("http://localhost:8000", data=token)
 print r.json()

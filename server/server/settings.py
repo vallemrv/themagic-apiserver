@@ -1,3 +1,11 @@
+# @Author: Manuel Rodriguez <valle>
+# @Date:   05-Sep-2017
+# @Email:  valle.mrv@gmail.com
+# @Last modified by:   valle
+# @Last modified time: 05-Sep-2017
+# @License: Apache license vesion 2.0
+
+
 """
 Django settings for server project.
 
@@ -14,10 +22,7 @@ import os
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-PATH_DBS = os.path.join(BASE_DIR, "dbs/")
 
-MEDIA_ROOT = os.path.join(BASE_DIR, 'docfiles')
-MEDIA_URL = '/docfiles/'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.10/howto/deployment/checklist/
@@ -113,6 +118,8 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
+
+
 # Internationalization
 # https://docs.djangoproject.com/en/1.10/topics/i18n/
 
@@ -125,6 +132,13 @@ USE_I18N = True
 USE_L10N = True
 
 USE_TZ = True
+
+#Themagic config
+MEDIA_ROOT = os.path.join(BASE_DIR, 'docfiles')
+MEDIA_URL = '/docfiles/'
+THEMAGIC_ALTER_TABLE = True
+THEMAGIC_PATH_DBS = os.path.join(BASE_DIR, "dbs/")
+THEMAGIC_DB_NAME = None
 
 
 # Static files (CSS, JavaScript, Images)

@@ -14,14 +14,26 @@ Requirements
 * django-tokenapi
 
 for install packages
-`$ pip install <packagename>`
+`$ pip install <packagename> for old version`
 
-:package: Installation
+:package: Installation (recommended)
 -----------------------
+Create project of django
+`$ django-admin startproject ejemplo`
 
-Clone repository
-`$ git clone https://github.com/vallemrv/themagic-apiserver.git`
-`$ link valleorm of python-ormsqlite on themagicapi folder`
+django-themagicapi
+`$ git clone https://github.com/vallemrv/django-themagicapi.git`
+`$ mv django-themagicapi/themagicapi ejemplo/themagicapi`
+
+python-valleorm
+`$ git clone https://github.com/vallemrv/python-valleorm.git`
+`$ mv python-valleorm/valleorm ejemplo/themagicapi/valleorm`
+
+django-tokenapi
+`$ git clone https://github.com/vallemrv/django-tokenapi.git`
+`$ mv django-tokenapi/tokenapi ejemplo/toknapi/`
+
+
 
 Run server
 `$ ./themagic-apiserver/server/manage.py runserver `
